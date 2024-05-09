@@ -6,6 +6,7 @@ import React, {useState} from 'react'
 import CustomButton from "../../components/CustomButton";
 import {Link, router} from "expo-router";
 import {createUser} from "../../lib/appwrite";
+import {useGlobalContext} from "../../context/GlobalProvider";
 
 const SignUp = () => {
     const [form, setForm] = useState({
@@ -15,6 +16,7 @@ const SignUp = () => {
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const {setUser, setIsLoggedIn}  = useGlobalContext();
 
     const submit = async () => {
         if (!form.email || !form.password || !form.name) {
@@ -23,9 +25,11 @@ const SignUp = () => {
         }
         try {
             setIsSubmitting(true)
-            await createUser(form.email, form.password, form.name)
+            const user  = await createUser(form.email, form.password, form.name)
+            setUser(user)
+            setIsLoggedIn(true)
             Alert.alert("Success", "Account created successfully")
-            router.push('/home')
+            router.replace('/Home')
         } catch (e) {
             Alert.alert("Error", e.message)
         } finally {
@@ -35,7 +39,7 @@ const SignUp = () => {
 
     return (
         <SafeAreaView className="bg-primary h-full px-3">
-            <ScrollView>
+            <ScrollView className={"h-full"}>
                 <View className="w-full min-h-[85vh] justify-center px-4 my-6">
                     <Image source={images.logo}
                            resizeMode="contain"

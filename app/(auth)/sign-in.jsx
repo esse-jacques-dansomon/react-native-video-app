@@ -1,10 +1,12 @@
-import {ScrollView, Text, View, Image} from 'react-native'
+import {ScrollView, Text, View, Image, Alert} from 'react-native'
 import {SafeAreaView} from "react-native-safe-area-context";
 import {images} from "../../constants";
 import FormField from "../../components/FormField";
 import React, {useState} from 'react'
 import CustomButton from "../../components/CustomButton";
-import {Link} from "expo-router";
+import {Link, router} from "expo-router";
+import {signIn} from "../../lib/appwrite";
+import {useGlobalContext} from "../../context/GlobalProvider";
 const SignIn = () => {
     const [form, setForm] = useState({
         email: "",
@@ -12,12 +14,26 @@ const SignIn = () => {
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const {setUser, setIsLoggedIn} = useGlobalContext();
 
-    const submit = () => {
-        setIsSubmitting(true)
-        setTimeout(() => {
+
+    const submit = async () => {
+        if (!form.email || !form.password) {
+            Alert.alert("Error", "Please fill all fields")
+            return
+        }
+        try {
+            setIsSubmitting(true)
+            const user = await signIn(form.email, form.password)
+            setUser(user)
+            setIsLoggedIn(true)
+            Alert.alert("Success", "Logged in successfully")
+            router.replace('/Home')
+        }catch (e) {
+            Alert.alert("Error", e.message)
+        }finally {
             setIsSubmitting(false)
-        }, 2000)
+        }
     }
 
     return (

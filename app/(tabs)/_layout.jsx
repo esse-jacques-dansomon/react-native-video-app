@@ -1,7 +1,10 @@
-import { Text, View , Image } from 'react-native'
-import { Tabs } from 'expo-router'
+import {Text, View, Image} from 'react-native'
+import {Redirect, Tabs} from 'expo-router'
 
-import { icons} from '../../constants'
+import {icons} from '../../constants'
+import {useGlobalContext} from "../../context/GlobalProvider";
+import {StatusBar} from "expo-status-bar";
+import {Loader} from "../../components";
 
 const tabsItems = [
     {
@@ -28,58 +31,65 @@ const tabsItems = [
 
 
 const TabIcon = ({icon, color, name, focused}) => {
-  return (
-    <View  className="items-center justify-center gap-2">
-
-      <Image 
-      source={icon} 
-      resizeMode="contain"
-      tintColor={color}
-      className="w-6 h-6"
-      />
-
-      <Text className={`${focused ? 'font-psemibold' : 'font-regular'} text-xs` } style={{color: color}}>
-        {name}
-      </Text>
-    </View>
-  )
+    return (
+        <View className="items-center justify-center gap-1 pt-2">
+            <Image
+                source={icon}
+                resizeMode="contain"
+                tintColor={color}
+                className="w-6 h-6"
+            />
+            <Text className={`${focused ? 'font-psemibold' : 'font-regular'} text-xs`} style={{color: color}}>
+                {name}
+            </Text>
+        </View>
+    )
 }
 
 
 const TabLayout = () => {
-  return (
-    <>
-      <Tabs screenOptions={{
-        tabBarShowLabel: false,
-          tabBarActiveTintColor: '#FF6347',
-          tabBarInactiveTintColor: '#CDCDE0',
-          tabBarStyle: {
-            height: 84,
-            backgroundColor: '#161622',
-            borderTopColor: '#161622',
-            elevation: 0,
+    const {isLoading, isLoggedIn} = useGlobalContext();
+    if (!isLoading && !isLoggedIn) return <Redirect href="/sign-in"/>;
 
-            }
-      }}>
-        {tabsItems.map((tab) => (
-          <Tabs.Screen
-            key={tab.id}
-            name={tab.name}
-            options={{
-              tabBarIcon: ({focused, color}) => (
-                <TabIcon
-                  icon={icons[tab.icon]}
-                  color={color}
-                  name={tab.name}
-                  focused={focused}
-                />
-              ),
-            }}
-          />
-        ))}
-      </Tabs>
-    </>
-  )
+
+
+    return (
+        <>
+            <Tabs screenOptions={{
+                tabBarActiveTintColor: "#FFA001",
+                tabBarInactiveTintColor: "#CDCDE0",
+                tabBarShowLabel: false,
+                tabBarStyle: {
+                    backgroundColor: "#161622",
+                    borderTopWidth: 1,
+                    borderTopColor: "#232533",
+                    height: 84,
+                },
+            }}>
+                {tabsItems.map((tab) => (
+                    <Tabs.Screen
+                        key={tab.id}
+                        name={tab.name}
+                        options={{
+                            title: tab.name,
+                            headerShown: false,
+                            tabBarIcon: ({focused, color}) => (
+                                <TabIcon
+                                    icon={icons[tab.icon]}
+                                    color={color}
+                                    name={tab.name}
+                                    focused={focused}
+                                />
+                            ),
+                        }}
+                    />
+                ))}
+            </Tabs>
+
+            <Loader isLoading={isLoading}/>
+            <StatusBar backgroundColor="#161622" style="light" />
+        </>
+    )
 }
 
 export default TabLayout

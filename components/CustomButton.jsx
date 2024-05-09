@@ -1,4 +1,4 @@
-import {Text, View, TouchableOpacity} from 'react-native'
+import {Text, TouchableOpacity} from 'react-native'
 import React from 'react'
 
 const CustomButton = ({title, handlePress, containerStyle, textStyles, isLoading,}) => {
@@ -8,7 +8,6 @@ const CustomButton = ({title, handlePress, containerStyle, textStyles, isLoading
          ${containerStyle} ${isLoading ? 'opacity-50' : ''}`}
                           onPress={handlePress}
                           disabled={isLoading}
-
         >
             <Text className={`text-primary font-bold text-sm ${textStyles}`}>{title}</Text>
         </TouchableOpacity>
