@@ -24,7 +24,7 @@ const tabsItems = [
     },
     {
         id: 4,
-        name: "Profil",
+        name: "Profile",
         icon: "profile",
     }
 ]
