@@ -18,11 +18,7 @@ This React Native Expo app is a clone of a popular video-sharing platform. It al
 
 ## Demo
 <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px;">
-  <img src="docs/screenshots/login.gif" width="30%" alt="Login Demo" />
-  <img src="docs/screenshots/state.gif" width="30%" alt="State Demo" />
-  <img src="docs/screenshots/lockscreen.gif" width="30%" alt="Lockscreen Demo" />
-  <img src="docs/screenshots/charts.gif" width="30%" alt="Charts Demo" />
-  <img src="docs/screenshots/icon.gif" width="30%" alt="Icon Demo" />
+  <img src="docs/demo.gif" width="50%" alt="Login Demo" />
 </div>
 
 ## Features
