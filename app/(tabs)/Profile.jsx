@@ -9,19 +9,19 @@ import {EmptyState, InfoBox, SearchInput, VideoCard} from "../../components";
 import {icons} from "../../constants";
 
 const Profile = () => {
-    const {user, setUser, setIsLoggedIn} = useGlobalContext()
+    const {user, setUser, setIsLoggedIn} = useGlobalContext();
     const {data: posts, refresh} = useAppwrite(() => getUserPosts(user.$id))
 
     useEffect(() => {
         refresh()
-    }, [user]);
+    }, []);
 
 
     const logout = () => {
         signOut();
         setUser(null);
         setIsLoggedIn(false);
-        router.replace("sign-in")
+        router.replace("/sign-in")
     }
 
     return (

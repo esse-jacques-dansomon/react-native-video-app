@@ -38,7 +38,7 @@ const Home = () => {
                         <View className={"justify-between items-start flex-row"}>
                             <View>
                                 <Text className={"text-gray-100 text-sm font-pmedium"}>Welcome back</Text>
-                                <Text className={"text-white text-2xl font-bold"}>Esse-Jacques</Text>
+                                <Text className={"text-white text-2xl font-bold"}>EsseJacques</Text>
                             </View>
                             <View className={"mt-1-5"}>
                                 <Image resizeMode={"contain"} source={images.logoSmall} className={"w-18 h-10"}/>
